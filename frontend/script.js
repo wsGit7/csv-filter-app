@@ -1,4 +1,4 @@
-const API = "https://csv-filter-app.onrender.com";
+const API = "https://csv-filter-app.onrender.com/filter";
 
 async function filter() {
   const params = new URLSearchParams({
