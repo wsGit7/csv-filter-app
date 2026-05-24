@@ -1,9 +1,12 @@
 import csv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -11,6 +14,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serwowanie statycznych plików (frontend)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Strona główna
+@app.get("/")
+def root():
+    return FileResponse("static/index.html")
+
+# Endpoint filtrujący
 @app.get("/filter")
 def filter_data(brand: str = None, speed: int = None, number: int = None):
     results = []
